@@ -1,0 +1,25 @@
+<table class="board">
+    <?php foreach ($game->getBoard()->getCells() as $rowPos => $row) : ?>
+        <tr>
+            <?php foreach ($row as $colPos => $cell) : ?>
+                <td>
+                    <?php if ($cell->getPiece()) : ?>
+                    <?php
+                        $class = 'btn-info';
+                        if ($cell->getAttribute('winner')) {
+                            $class = 'btn-success';
+                        }
+                    ?>
+                        <div class="piece btn <?php echo $class ?>"><?php echo $cell->getPiece()->getSymbol() ?></div>
+                    <?php else : ?>
+                        <form method="POST">
+                            <input type="hidden" name="position[row]" value="<?php echo $rowPos ?>" />
+                            <input type="hidden" name="position[col]" value="<?php echo $colPos ?>" />
+                            <input type="submit" name="play" value="" class="btn btn-primary"/>
+                        </form>
+                    <?php endif ?>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endforeach; ?>
+</table>
