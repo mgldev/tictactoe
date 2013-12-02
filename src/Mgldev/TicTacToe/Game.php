@@ -3,12 +3,18 @@
 namespace Mgldev\TicTacToe;
 
 use Mgldev\Game\Board\Game as BoardGame;
+use Mgldev\Game\Board\SquareBoard;
 use Mgldev\Game\Player;
 
 class Game extends BoardGame {
 
     const DIRECTION_VERTICAL = 0;
     const DIRECTION_HORIZONTAL = 1;
+
+    public function __construct(SquareBoard $board) {
+
+        parent::__construct($board);
+    }
 
     /**
      * Add a player to the game, ensuring we pass the game to the player as a reference
@@ -32,20 +38,13 @@ class Game extends BoardGame {
 
         $retval = null;
         $board = $this->getBoard();
+        $count = $board->getColumnCount();
 
-        if ($direction == self::DIRECTION_HORIZONTAL) {
-            $xMax = $board->getRowCount();
-            $yMax = $board->getColumnCount();
-        } else {
-            $xMax = $board->getColumnCount();
-            $yMax = $board->getRowCount();
-        }
-
-        for ($x = 0; $x < $xMax; $x++) {
+        for ($x = 0; $x < $count; $x++) {
             $lastPiece = null;
             $score = 0;
             $winningCells = [];
-            for ($y = 0; $y < $yMax; $y++) {
+            for ($y = 0; $y < $count; $y++) {
                 $posX = $x;
                 $posY = $y;
                 if ($direction == self::DIRECTION_VERTICAL) {
@@ -61,7 +60,7 @@ class Game extends BoardGame {
                 }
             }
 
-            if ($score == ($yMax -1)) {
+            if ($score == ($count - 1)) {
                 foreach ($winningCells as $cell) {
                     $cell->setAttribute('winner', true);
                 }

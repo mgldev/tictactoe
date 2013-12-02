@@ -1,6 +1,6 @@
 <?php
 
-use Mgldev\Game\Board;
+use Mgldev\Game\Board\SquareBoard;
 use Mgldev\TicTacToe\Game as TicTacToe;
 use Mgldev\Game\Board\Piece;
 use Mgldev\TicTacToe\Player;
@@ -14,7 +14,7 @@ $draw = false;
 if (isset($_SESSION['tictactoe'])) {
     $game = @unserialize($_SESSION['tictactoe']);
 } else {
-    $game = new TicTacToe(new Board(3,3));
+    $game = new TicTacToe(new SquareBoard(3,3));
     $mark = new Player('Mark', new Piece('O'));
     $mike = new Player('Mike', new Piece('X'));
     $game->addPlayer($mike)->addPlayer($mark);
